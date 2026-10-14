@@ -1,4 +1,4 @@
-import { isConnected, request, icon, putIcon, notify, formatBytes, formatDate } from "./shared.js";
+import { isConnected, request, icon, notify, formatBytes, formatDate } from "./shared.js";
 
 const $ = (id) => document.getElementById(id);
 for (const slot of document.querySelectorAll("[data-icon]")) slot.replaceChildren(icon(slot.dataset.icon, 18));
@@ -119,8 +119,6 @@ function renderKnowledge(search = "") {
   const root = heading("知识库", create);
   notice(root);
   const grid = make("div", "kb-grid");
-  const entries = state.bases.filter((base) =>
-    (String(base.name || "") + " " + String(base.description || "")).toLowerCase().includes(search));
   const bar = pageToolbar(filterInput("搜索知识库", (value) => fillGrid(value, grid)), make("span", "muted-label", "共 " + state.bases.length + " 个"));
   root.append(bar, grid);
   fillGrid(search, grid);
