@@ -319,7 +319,8 @@ async function retryDocument(doc) {
   try {
     await api("/api/admin/documents/" + apiId(idOf(doc)) + "/reindex", { method: "POST" });
     notify("已提交处理", "success");
-    await reloadDocuments();
+    if (state.view === "detail") await openDetail(idOf(doc));
+    else await reloadDocuments();
   } catch (error) { notify(error.message); }
 }
 async function deleteDocument(doc) {
@@ -439,7 +440,11 @@ function renderRetrieval() {
   head.append(make("strong", "", "检索结果"));
   if (state.retrievalElapsed != null && state.hits) head.append(make("span", "muted-label", String(state.retrievalElapsed) + " ms"));
   result.append(head);
-  if (!state.hits) result.append(emptyState("暂无检索结果", "search").classList.add("test-placeholder") && result.lastElementChild);
+  if (!state.hits) {
+    const empty = emptyState("暂无检索结果", "search");
+    empty.classList.add("test-placeholder");
+    result.append(empty);
+  }
   else if (!state.hits.length) result.append(emptyState("未找到相关内容", "search"));
   else {
     const list = make("div", "result-list");
