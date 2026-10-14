@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fb">
+  <title>管理后台 · 易富路 RAG</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./admin.css">
+  <script src="./config.js"></script>
+  <script type="module" src="./admin.js"></script>
+</head>
+<body class="admin-page">
+  <div class="admin-layout">
+    <aside class="admin-sidebar" id="admin-sidebar" aria-label="管理导航">
+      <a class="brand" href="./"><span class="brand-symbol" aria-hidden="true">✦</span><span>易富路 <b>RAG</b></span></a>
+      <div class="admin-product-label">管理后台</div>
+      <nav class="admin-nav" aria-label="管理页面">
+        <button class="admin-nav-item active" type="button" data-view="knowledge"><span data-icon="book"></span> 知识库</button>
+        <button class="admin-nav-item" type="button" data-view="documents"><span data-icon="file"></span> 文档管理</button>
+        <button class="admin-nav-item" type="button" data-view="retrieval"><span data-icon="search"></span> 检索验证</button>
+        <button class="admin-nav-item" type="button" data-view="feedback"><span data-icon="feedback"></span> 问答反馈</button>
+      </nav>
+      <div class="admin-sidebar-bottom">
+        <a class="admin-nav-item" href="./"><span data-icon="arrowLeft"></span> 返回问答</a>
+        <button class="admin-nav-item" type="button" id="logout-button" hidden><span data-icon="logout"></span> 退出管理</button>
+      </div>
+    </aside>
+    <div class="admin-main">
+      <header class="admin-topbar">
+        <div class="admin-top-left">
+          <button id="admin-menu" class="icon-button admin-mobile-toggle" type="button" aria-label="展开导航"><span data-icon="menu"></span></button>
+          <div class="breadcrumb"><span>管理后台</span><span class="crumb-separator">/</span><strong id="breadcrumb">知识库</strong></div>
+        </div>
+        <div class="admin-top-right">
+          <span class="backend-status" id="backend-status">未连接</span>
+          <span class="admin-avatar" aria-label="管理员">A</span>
+        </div>
+      </header>
+      <div id="admin-content" class="admin-content"></div>
+    </div>
+  </div>
+  <div id="admin-overlay" class="sidebar-overlay" hidden></div>
+  <input id="file-upload" type="file" accept=".pdf,.docx,.md,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain,text/markdown" hidden>
+  <div id="dialog-backdrop" class="modal-backdrop" hidden>
+    <form id="knowledge-form" class="admin-dialog">
+      <div class="dialog-heading"><h2 id="dialog-title">新建知识库</h2><button id="dialog-close" class="icon-button" type="button" aria-label="关闭"><span data-icon="x"></span></button></div>
+      <label class="form-label" for="kb-name">名称</label>
+      <input type="text" id="kb-name" class="form-input" maxlength="80" required placeholder="知识库名称">
+      <label class="form-label" for="kb-description">描述</label>
+      <textarea id="kb-description" class="form-textarea" maxlength="300" rows="3" placeholder="可选"></textarea>
+      <div class="dialog-footer"><button class="button" type="button" id="dialog-cancel">取消</button><button class="button button-primary" type="submit" id="dialog-submit">保存</button></div>
+    </form>
+  </div>
+  <div id="login-backdrop" class="modal-backdrop login-backdrop" hidden>
+    <form id="admin-login" class="admin-login">
+      <span class="brand-symbol login-symbol" aria-hidden="true">✦</span>
+      <h1>管理员登录</h1>
+      <label class="form-label" for="login-username">账号</label>
+      <input id="login-username" class="form-input" type="text" autocomplete="username" required>
+      <label class="form-label" for="login-password">密码</label>
+      <input id="login-password" class="form-input" type="password" autocomplete="current-password" required>
+      <p class="login-error" id="login-error" role="alert" hidden></p>
+      <button class="button button-primary login-button" type="submit" id="login-submit">登录</button>
+      <a href="./" class="back-to-chat">返回问答</a>
+    </form>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
