@@ -54,6 +54,9 @@ function updateHistory() {
   }
 }
 function showWelcome(value) {
+  const composer = $("chat-input-wrap");
+  if (value) $("welcome-content").insertBefore(composer, $("suggestions"));
+  else $("chat-main").append(composer);
   $("welcome").hidden = !value;
   $("message-list").hidden = value;
 }
