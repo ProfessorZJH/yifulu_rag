@@ -98,6 +98,7 @@ function statusChip(status) {
   return make("span", "status-chip " + (["ready","completed","indexed","success"].includes(key) ? "ready" : key), names[key] || "未知");
 }
 function switchView(view) {
+  if (state.view !== view) state.error = "";
   state.view = view;
   const names = { knowledge: "知识库", documents: "文档管理", detail: "文档详情", retrieval: "检索验证", feedback: "问答反馈" };
   $("breadcrumb").textContent = names[view] || "知识库";
