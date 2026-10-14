@@ -30,7 +30,7 @@
         </a>
       </div>
     </aside>
-    <main class="chat-main">
+    <main class="chat-main" id="chat-main">
       <header class="chat-header">
         <div class="header-leading">
           <button type="button" class="icon-button mobile-toggle" id="mobile-toggle" aria-label="展开菜单"><span data-icon="menu"></span></button>
@@ -46,7 +46,7 @@
       <div id="chat-scroll" class="chat-scroll">
         <section class="welcome" id="welcome">
           <div class="welcome-glow" aria-hidden="true"></div>
-          <div class="welcome-content">
+          <div class="welcome-content" id="welcome-content">
             <div class="welcome-mark" aria-hidden="true">✦</div>
             <h1>有什么可以帮你？</h1>
             <div id="suggestions" class="suggestion-list" hidden></div>
@@ -54,7 +54,7 @@
         </section>
         <section id="message-list" class="message-list" aria-live="polite" aria-relevant="additions"></section>
       </div>
-      <div class="chat-input-wrap">
+      <div class="chat-input-wrap" id="chat-input-wrap">
         <form id="chat-form" class="chat-input">
           <label class="sr-only" for="question">问题</label>
           <textarea id="question" rows="1" maxlength="2000" placeholder="向知识库提问..." aria-label="输入问题"></textarea>
