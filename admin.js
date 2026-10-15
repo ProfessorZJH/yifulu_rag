@@ -226,6 +226,11 @@ function renderDocuments(search = "", filterStatus = "") {
   if (base) {
     const back = button("全部知识库", "detail-back", () => switchView("knowledge"), "arrowLeft");
     root.insertBefore(back, root.firstElementChild);
+    if (state.bases.length > 1) {
+      const selector = baseSelector(() => openDocuments(state.selectedBaseId));
+      const controls = root.querySelector(".admin-actions");
+      controls?.prepend(selector);
+    }
   }
   notice(root);
   if (!base) {
@@ -238,6 +243,19 @@ function renderDocuments(search = "", filterStatus = "") {
   const add = button("选择文件", "button button-small", () => $("file-upload").click(), "plus");
   add.disabled = !canEdit();
   strip.append(add);
+  if (canEdit()) {
+    strip.addEventListener("dragover", (event) => {
+      event.preventDefault();
+      strip.classList.add("is-dropping");
+    });
+    strip.addEventListener("dragleave", () => strip.classList.remove("is-dropping"));
+    strip.addEventListener("drop", async (event) => {
+      event.preventDefault();
+      strip.classList.remove("is-dropping");
+      const files = [...(event.dataTransfer?.files || [])];
+      for (const file of files) await uploadDocument(file);
+    });
+  }
   root.append(strip);
   const filters = make("div", "page-filter");
   filters.append(filterInput("搜索文档", (value) => updateRows(value, status.value)));
