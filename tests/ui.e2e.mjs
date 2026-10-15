@@ -36,7 +36,7 @@ try {
  await page.goto(base+'/admin.html',{waitUntil:'networkidle'});
  await page.locator('#login-username').fill('admin');await page.locator('#login-password').fill('not-a-real-password');await page.locator('#login-submit').click();
  await page.locator('.kb-card').first().waitFor(); assert.equal(await page.locator('.kb-card').count(),2);await snap('admin-knowledge');
- await page.getByRole('button',{name:'产品知识库',exact:true}).first().click();await page.getByText('产品操作手册.pdf').waitFor();await snap('admin-documents');
+ await page.getByRole('button',{name:'产品知识库',exact:true}).first().click();await page.getByText('产品操作手册.pdf').waitFor();const searchBox=await page.locator('.page-filter .search-box').boundingBox();const stateFilter=await page.locator('.page-filter .simple-select').boundingBox();assert(searchBox && stateFilter && Math.abs(searchBox.y-stateFilter.y)<12,'document toolbar must share a desktop row');await snap('admin-documents');
  await page.getByRole('button',{name:'产品操作手册.pdf'}).click();await page.getByText('第一章 订单管理').waitFor();await snap('admin-detail');
  await page.getByRole('button',{name:'检索测试'}).click();await page.locator('#retrieval-query').fill('售后如何办理？');await page.getByRole('button',{name:'开始检索'}).click();await page.getByText('在订单详情里发起售后申请。').waitFor();await snap('admin-retrieval');
  const mobile=await browser.newContext({viewport:{width:390,height:844},locale:'zh-CN'});await setup(mobile);const m=await mobile.newPage();m.on('pageerror',e=>errors.push(String(e)));await m.goto(base+'/',{waitUntil:'networkidle'});await m.screenshot({path:'screenshots/user-mobile.png'});await m.getByRole('button',{name:'展开菜单'}).click();assert.equal(await m.locator('#sidebar.open').count(),1);await mobile.close();
