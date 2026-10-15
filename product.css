@@ -201,6 +201,13 @@ input::placeholder, textarea::placeholder { color: #a1acbd; }
 }
 .panel { border: 1px solid #e7ecf3; border-radius: 17px; background: #fff; box-shadow: 0 4px 18px rgba(30,52,90,.022); }
 .toolbar { margin-bottom: 20px; }
+.page-filter { display: flex; flex: 1 1 auto; min-width: 0; gap: 11px; align-items: center; flex-wrap: nowrap; }
+.page-filter .search-box { flex: 0 1 320px; min-width: 160px; }
+.page-filter .simple-select { flex: 0 0 134px; }
+@media (max-width: 680px) {
+  .page-filter { flex-wrap: wrap; }
+  .page-filter .search-box { flex-basis: 100%; }
+}
 .search-box {
   border-radius: 11px; min-height: 42px; border-color: #e2e8f0;
   width: min(320px,100%); background: #fff; padding: 0 14px;
