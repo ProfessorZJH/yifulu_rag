@@ -1,0 +1,55 @@
+name: Web checks
+on:
+  push:
+    branches:
+      - main
+      - feature/**
+  pull_request:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate frontend
+        run: npm run check
+      - name: Add Chinese font for UI screenshots
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y fonts-noto-cjk
+      - name: Browser smoke and screenshots
+        shell: bash
+        run: |
+          mkdir -p screenshots
+          python3 -m http.server 8765 > /tmp/yifulu-rag-http.log 2>&1 &
+          sleep 2
+          CHROME="$(command -v google-chrome || command -v chromium || true)"
+          if [ -n "$CHROME" ]; then
+            "$CHROME" --headless=new --no-sandbox --disable-gpu --hide-scrollbars --window-size=1440,900 --virtual-time-budget=2000 --screenshot=screenshots/chat.png http://127.0.0.1:8765/ > /tmp/chat-browser.log 2>&1
+            "$CHROME" --headless=new --no-sandbox --disable-gpu --hide-scrollbars --window-size=1440,900 --virtual-time-budget=2000 --screenshot=screenshots/admin.png http://127.0.0.1:8765/admin.html > /tmp/admin-browser.log 2>&1
+            test -s screenshots/chat.png
+            test -s screenshots/admin.png
+          else
+            echo "Chrome not present; source checks completed"
+          fi
+      - name: Interactive browser acceptance
+        shell: bash
+        run: |
+          npm install --no-save playwright@1.56.1
+          python3 -m http.server 8766 >/tmp/rag-acceptance-http.log 2>&1 &
+          sleep 2
+          CHROME_PATH="$(command -v google-chrome || command -v chromium)" node tests/ui.e2e.mjs
+      - name: Bundle preview sources
+        run: |
+          mkdir -p screenshots/source
+          cp index.html admin.html styles.css admin.css product.css logo.svg config.js shared.js app.js admin.js screenshots/source/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: web-screenshots
+          path: screenshots/
+          if-no-files-found: ignore
