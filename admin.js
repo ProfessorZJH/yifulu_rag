@@ -100,7 +100,7 @@ function statusChip(status) {
 function switchView(view) {
   if (state.view !== view) state.error = "";
   state.view = view;
-  const names = { knowledge: "知识库", documents: "文档管理", detail: "文档详情", retrieval: "检索验证", feedback: "问答反馈" };
+  const names = { knowledge: "知识库", documents: "文档管理", detail: "文档详情", retrieval: "检索测试", feedback: "问答反馈" };
   $("breadcrumb").textContent = names[view] || "知识库";
   document.querySelectorAll(".admin-nav-item[data-view]").forEach((item) => item.classList.toggle("active", item.dataset.view === view));
   if (view !== "detail") history.replaceState(null, "", "#" + view);
@@ -432,7 +432,7 @@ function baseSelector(onChange) {
   return sel;
 }
 function renderRetrieval() {
-  const root = heading("检索验证");
+  const root = heading("检索测试");
   notice(root);
   const cols = make("div", "test-layout");
   const queryPanel = make("section", "panel query-card");
