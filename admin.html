@@ -6,19 +6,21 @@
   <meta name="theme-color" content="#f7f8fb">
   <title>管理后台 · 易富路 RAG</title>
   <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" href="./logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./admin.css">
+  <link rel="stylesheet" href="./product.css">
   <script src="./config.js"></script>
   <script type="module" src="./admin.js"></script>
 </head>
 <body class="admin-page">
   <div class="admin-layout">
     <aside class="admin-sidebar" id="admin-sidebar" aria-label="管理导航">
-      <a class="brand" href="./"><span class="brand-symbol" aria-hidden="true">✦</span><span>易富路 <b>RAG</b></span></a>
-      <div class="admin-product-label">管理后台</div>
+      <a class="brand" href="./"><img class="brand-logo" src="./logo.svg" width="41" height="41" alt=""><span>易富路 <b>RAG</b></span></a>
+      <div class="admin-product-label">知识管理</div>
       <nav class="admin-nav" aria-label="管理页面">
         <button class="admin-nav-item active" type="button" data-view="knowledge"><span data-icon="book"></span> 知识库</button>
         <button class="admin-nav-item" type="button" data-view="documents"><span data-icon="file"></span> 文档管理</button>
-        <button class="admin-nav-item" type="button" data-view="retrieval"><span data-icon="search"></span> 检索验证</button>
+        <button class="admin-nav-item" type="button" data-view="retrieval"><span data-icon="search"></span> 检索测试</button>
         <button class="admin-nav-item" type="button" data-view="feedback"><span data-icon="feedback"></span> 问答反馈</button>
       </nav>
       <div class="admin-sidebar-bottom">
@@ -54,7 +56,7 @@
   </div>
   <div id="login-backdrop" class="modal-backdrop login-backdrop" hidden>
     <form id="admin-login" class="admin-login">
-      <span class="brand-symbol login-symbol" aria-hidden="true">✦</span>
+      <img class="brand-logo login-symbol" src="./logo.svg" width="54" height="54" alt="">
       <h1>管理员登录</h1>
       <label class="form-label" for="login-username">账号</label>
       <input id="login-username" class="form-input" type="text" autocomplete="username" required>
